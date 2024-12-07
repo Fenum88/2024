@@ -20,11 +20,8 @@ for i in a:
             y=ymax
         xmax+=1
     ymax+=1
-
 x2=x
 y2=y
-
-
 def printCountM(M):
     ans=0
     for y in range(0,ymax+1):
