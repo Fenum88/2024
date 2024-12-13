@@ -2,37 +2,22 @@ from collections import defaultdict
 from copy import deepcopy
 from itertools import product
 import time as cl
+import re
 a=open("input.in").read().split("\n\n")
 nums="1234567890"
 m=[]
-M={}
 tStart= cl.time()
 for i in a:
-    b=i.split("\n")
-    N={}
-    aw=b[0].split("+")
-    ax= int(aw[1].split(",")[0])
-    ay= int(aw[-1])
-    N["a"]=(ax,ay)
-    bw=b[1].split("+")
-    bx= int(bw[1].split(",")[0])
-    by= int(bw[-1])
-    N["b"]=(bx,by)
-    pw=b[2].split("=")
-    px= int(pw[1].split(",")[0])
-    py= int(pw[-1])
-    N["p"]=(px,py)
-    m.append(N)
+    m.append(tuple(map(int, re.findall(r'-?\d+', i))))
 idx=1
 for zahl in [0,10000000000000]:
     p1=0
     for machine in m:
-        machine["p"]=(machine["p"][0]+zahl,machine["p"][1]+zahl)
-        (ax,ay)=machine["a"]
-        (bx,by)=machine["b"]
-        (px,py)=machine["p"]
+        (ax,ay,bx,by,px,py)=machine
+        px+=zahl
+        py+=zahl
         zaehler=(px*by-py*bx)
-        nenner=(ax*by-machine["a"][1]*bx)
+        nenner=(ax*by-ay*bx)
         s= zaehler/nenner
         t= (px-ax*s)/bx
         if s%1==0 and t%1==0:
